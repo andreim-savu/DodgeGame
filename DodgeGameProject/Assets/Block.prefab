@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2344496392974209902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 54aac7f02f1c66e45a92db5f498b11e1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9fa2d394837e26a41be815807042fd0c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -397,6 +397,9 @@ MonoBehaviour:
   screen: {fileID: 4738622372197171912}
   baseScreen: {fileID: 2100000, guid: 6d0397c9c2ccb6843a6812421779525a, type: 2}
   damageScreen: {fileID: 2100000, guid: b2a09a7991ffccf4eb484cb35fba7e69, type: 2}
+  damageSprite: {fileID: 21300000, guid: 54aac7f02f1c66e45a92db5f498b11e1, type: 3}
+  pushSprite: {fileID: 21300000, guid: 9fa2d394837e26a41be815807042fd0c, type: 3}
+  attackSprite: {fileID: 21300000, guid: b652b074568d46d47ad7abde1947480e, type: 3}
   cubeBody:
   - {fileID: 4738622371826355574}
   - {fileID: 4738622371735377462}

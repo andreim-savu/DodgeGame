@@ -7,10 +7,12 @@ public class GameController : MonoBehaviour
 {
     public static GameController i;
 
-    public int score;
-    public Text scoreText;
+    public float timer;
+    public Text timeText;
 
     public bool playerAlive = true;
+
+    public bool levelStarted;
 
     private void Awake()
     {
@@ -25,12 +27,10 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    public void AddScore(int amount)
-    {
-        score += amount;
-        scoreText.text = "Score: " + score.ToString();
+        if (levelStarted)
+        {
+            timer += Time.deltaTime;
+            timeText.text = "Time: " + timer.ToString("F2");
+        }
     }
 }

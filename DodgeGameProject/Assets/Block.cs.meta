@@ -4,8 +4,16 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - trigger: {instanceID: 0}
   - c1: {fileID: 2100000, guid: bef2d755374de37459e8c475ba15902b, type: 2}
   - c2: {fileID: 2100000, guid: 8320339107bfcb3428e3929655af3ff2, type: 2}
+  - screen: {instanceID: 0}
+  - baseScreen: {instanceID: 0}
+  - damageScreen: {instanceID: 0}
+  - damageSprite: {fileID: 21300000, guid: 54aac7f02f1c66e45a92db5f498b11e1, type: 3}
+  - pushSprite: {fileID: 21300000, guid: 9fa2d394837e26a41be815807042fd0c, type: 3}
+  - attackSprite: {fileID: 21300000, guid: b652b074568d46d47ad7abde1947480e, type: 3}
+  - actionImage: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

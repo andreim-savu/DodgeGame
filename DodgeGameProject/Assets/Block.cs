@@ -12,9 +12,18 @@ public class Block : MonoBehaviour
     [SerializeField] Material baseScreen;
     [SerializeField] Material damageScreen;
 
+    [SerializeField] Sprite damageSprite;
+    [SerializeField] Sprite pushSprite;
+    [SerializeField] Sprite attackSprite;
+
+    enum blockAction {INACTIVE, DAMAGE, PUSH, ATTACK};
+    blockAction state = blockAction.INACTIVE;
+
     [SerializeField] List<GameObject> cubeBody = new List<GameObject>();
 
     [SerializeField] Image actionImage;
+
+    Vector3 pushDirection;
 
     bool actionInProgress;
 
@@ -26,20 +35,15 @@ public class Block : MonoBehaviour
 
     void Start()
     {
-        maxTimer = Random.Range(2.0f, 12.0f);
-        timer = maxTimer;
-        actionInProgress = true;
         SetupCube();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!GameController.i.playerAlive) { return; }
 
         if (!actionInProgress)
         {
-            StartAction();
             return;
         }
 
@@ -51,8 +55,8 @@ public class Block : MonoBehaviour
             {
                 screenTimer = maxScreenTimer;
                 screen.material = damageScreen;
+                actionImage.enabled = false;
                 trigger.enabled = true;
-                GameController.i.AddScore(1);
             }
             return;
         }
@@ -74,15 +78,51 @@ public class Block : MonoBehaviour
         }
     }
 
-    void StartAction()
+    public void SetAction(string action, float duration, string direction = "")
     {
-        float tt = Mathf.Max(2.5f, 12.0f - GameController.i.score * 0.1f);
-        maxTimer = Random.Range(2.0f, tt);
+        actionImage.transform.localEulerAngles = new Vector3(0, 0, 0);
+        switch (action)
+        {
+            case "damage":
+                state = blockAction.DAMAGE;
+                actionImage.sprite = damageSprite;
+                break;
+            case "push":
+                state = blockAction.PUSH;
+                actionImage.sprite = pushSprite;
+                switch (direction)
+                {
+                    case "up":
+                        pushDirection = Vector3.forward;
+                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 0);
+                        break;
+                    case "right":
+                        pushDirection = Vector3.right;
+                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 270);
+                        break;
+                    case "down":
+                        pushDirection = Vector3.back;
+                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 180);
+                        break;
+                    case "left":
+                        pushDirection = Vector3.left;
+                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 90);
+                        break;
+                }
+                break;
+            case "attack":
+                state = blockAction.ATTACK;
+                actionImage.sprite = attackSprite;
+                break;
+        }
+
+        actionImage.enabled = true;
+
+        maxTimer = duration;
         timer = maxTimer;
+
         actionInProgress = true;
     }
-
-
 
     void SetupCube()
     {
@@ -97,7 +137,16 @@ public class Block : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerStats>().TakeDamage(1);
+            print(state);
+            switch (state)
+            {
+                case blockAction.DAMAGE:
+                    other.GetComponent<PlayerStats>().TakeDamage(1);
+                    break;
+                case blockAction.PUSH:
+                    other.GetComponent<PlayerMovement>().StartPush(pushDirection);
+                    break;
+            }
         }
     }
 }
