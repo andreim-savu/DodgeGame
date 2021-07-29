@@ -16,6 +16,8 @@ public class Block : MonoBehaviour
     [SerializeField] Sprite pushDamageSprite;
     [SerializeField] Sprite attackSprite;
 
+    public List<Block> neighbours = new List<Block>();
+
     enum blockAction {INACTIVE, DAMAGE, PUSH, PUSHDAMAGE, ATTACK};
     blockAction state = blockAction.INACTIVE;
 
@@ -37,6 +39,11 @@ public class Block : MonoBehaviour
 
     void Start()
     {
+    }
+
+    public void SetNeighbours(List<Block> blocks)
+    {
+        neighbours = blocks;
     }
 
     void Update()
