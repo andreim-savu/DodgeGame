@@ -342,10 +342,9 @@ GameObject:
   - component: {fileID: 4738622371416502417}
   - component: {fileID: 4738622371416502422}
   - component: {fileID: 4738622371416502416}
-  - component: {fileID: 6185554618504065861}
   m_Layer: 0
   m_Name: Block
-  m_TagString: Untagged
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,7 +357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4738622371416502418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4738622371790567449}
@@ -377,7 +376,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 4.3029428, z: 4}
+  m_Size: {x: 3.9, y: 4.3029428, z: 3.9}
   m_Center: {x: 0, y: 0.15147138, z: 0}
 --- !u!114 &4738622371416502416
 MonoBehaviour:
@@ -391,7 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3657696c01983674d85680cb1321aace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 6185554618504065861}
   c1: {fileID: 2100000, guid: bef2d755374de37459e8c475ba15902b, type: 2}
   c2: {fileID: 2100000, guid: 8320339107bfcb3428e3929655af3ff2, type: 2}
   screen: {fileID: 4738622372197171912}
@@ -399,6 +397,7 @@ MonoBehaviour:
   damageScreen: {fileID: 2100000, guid: b2a09a7991ffccf4eb484cb35fba7e69, type: 2}
   damageSprite: {fileID: 21300000, guid: 54aac7f02f1c66e45a92db5f498b11e1, type: 3}
   pushSprite: {fileID: 21300000, guid: 9fa2d394837e26a41be815807042fd0c, type: 3}
+  pushDamageSprite: {fileID: 21300000, guid: 1d1396b0158a66a46a7f9d528dea2418, type: 3}
   attackSprite: {fileID: 21300000, guid: b652b074568d46d47ad7abde1947480e, type: 3}
   cubeBody:
   - {fileID: 4738622371826355574}
@@ -407,19 +406,6 @@ MonoBehaviour:
   - {fileID: 4738622370886229264}
   - {fileID: 4738622372344148092}
   actionImage: {fileID: 379818734619546355}
---- !u!65 &6185554618504065861
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4738622371416502418}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 4, y: 5, z: 4}
-  m_Center: {x: 0, y: 4.74, z: 0}
 --- !u!1 &4738622371735377462
 GameObject:
   m_ObjectHideFlags: 0

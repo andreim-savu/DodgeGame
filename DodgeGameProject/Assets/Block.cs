@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Block : MonoBehaviour
 {
-    [SerializeField] BoxCollider trigger;
     [SerializeField] Material c1;
     [SerializeField] Material c2;
     [SerializeField] Renderer screen;
@@ -14,9 +13,10 @@ public class Block : MonoBehaviour
 
     [SerializeField] Sprite damageSprite;
     [SerializeField] Sprite pushSprite;
+    [SerializeField] Sprite pushDamageSprite;
     [SerializeField] Sprite attackSprite;
 
-    enum blockAction {INACTIVE, DAMAGE, PUSH, ATTACK};
+    enum blockAction {INACTIVE, DAMAGE, PUSH, PUSHDAMAGE, ATTACK};
     blockAction state = blockAction.INACTIVE;
 
     [SerializeField] List<GameObject> cubeBody = new List<GameObject>();
@@ -33,9 +33,10 @@ public class Block : MonoBehaviour
     float maxScreenTimer = 0.15f;
     float screenTimer;
 
+    bool playerOn;
+
     void Start()
     {
-        SetupCube();
     }
 
     void Update()
@@ -56,7 +57,7 @@ public class Block : MonoBehaviour
                 screenTimer = maxScreenTimer;
                 screen.material = damageScreen;
                 actionImage.enabled = false;
-                trigger.enabled = true;
+                TriggerAction();
             }
             return;
         }
@@ -66,10 +67,8 @@ public class Block : MonoBehaviour
         {
             screenTimer -= Time.deltaTime;
 
-            if (screenTimer <= 0.1f && trigger.enabled)
-            {
-                trigger.enabled = false;
-            }
+            state = blockAction.INACTIVE;
+            
             if (screenTimer <= 0)
             {
                 actionInProgress = false;
@@ -78,9 +77,49 @@ public class Block : MonoBehaviour
         }
     }
 
+    void TriggerAction()
+    {
+        if (playerOn)
+        {
+            switch (state)
+            {
+                case blockAction.DAMAGE:
+                    PlayerStats.i.TakeDamage(1);
+                    break;
+                case blockAction.PUSH:
+                    PlayerStats.i.playerMovement.StartPush(pushDirection);
+                    break;
+                case blockAction.PUSHDAMAGE:
+                    PlayerStats.i.TakeDamage(1);
+                    PlayerStats.i.playerMovement.StartPush(pushDirection);
+                    break;
+            }
+        }
+    }
+
     public void SetAction(string action, float duration, string direction = "")
     {
-        actionImage.transform.localEulerAngles = new Vector3(0, 0, 0);
+        if (actionInProgress) { return; }
+        switch (direction)
+        {
+            case "right":
+                pushDirection = Vector3.right;
+                actionImage.transform.localEulerAngles = new Vector3(0, 0, 270);
+                break;
+            case "down":
+                pushDirection = Vector3.back;
+                actionImage.transform.localEulerAngles = new Vector3(0, 0, 180);
+                break;
+            case "left":
+                pushDirection = Vector3.left;
+                actionImage.transform.localEulerAngles = new Vector3(0, 0, 90);
+                break;
+            default:
+                pushDirection = Vector3.forward;
+                actionImage.transform.localEulerAngles = new Vector3(0, 0, 0);
+                break;
+        }
+
         switch (action)
         {
             case "damage":
@@ -90,25 +129,10 @@ public class Block : MonoBehaviour
             case "push":
                 state = blockAction.PUSH;
                 actionImage.sprite = pushSprite;
-                switch (direction)
-                {
-                    case "up":
-                        pushDirection = Vector3.forward;
-                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 0);
-                        break;
-                    case "right":
-                        pushDirection = Vector3.right;
-                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 270);
-                        break;
-                    case "down":
-                        pushDirection = Vector3.back;
-                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 180);
-                        break;
-                    case "left":
-                        pushDirection = Vector3.left;
-                        actionImage.transform.localEulerAngles = new Vector3(0, 0, 90);
-                        break;
-                }
+                break;
+            case "pushdamage":
+                state = blockAction.PUSHDAMAGE;
+                actionImage.sprite = pushDamageSprite;
                 break;
             case "attack":
                 state = blockAction.ATTACK;
@@ -124,29 +148,24 @@ public class Block : MonoBehaviour
         actionInProgress = true;
     }
 
-    void SetupCube()
+    public Block OccupyCube(bool occupy)
     {
-        foreach (GameObject bodyPart in cubeBody)
+        if (occupy)
         {
-            if (transform.GetSiblingIndex() % 2 == 0) { bodyPart.GetComponent<Renderer>().material = c1; }
-            else { bodyPart.GetComponent<Renderer>().material = c2; }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            print(state);
-            switch (state)
+            foreach (GameObject bodyPart in cubeBody)
             {
-                case blockAction.DAMAGE:
-                    other.GetComponent<PlayerStats>().TakeDamage(1);
-                    break;
-                case blockAction.PUSH:
-                    other.GetComponent<PlayerMovement>().StartPush(pushDirection);
-                    break;
+                bodyPart.GetComponent<Renderer>().material = c2; 
             }
+            playerOn = true;
         }
+        else
+        {
+            foreach (GameObject bodyPart in cubeBody)
+            {
+                bodyPart.GetComponent<Renderer>().material = c1;
+            }
+            playerOn = false;
+        }
+        return this;
     }
 }
