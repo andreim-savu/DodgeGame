@@ -46,10 +46,12 @@ public class Level6 : MonoBehaviour
         rows.Add(r4);
 
         SetupBlocks();
+        StartCoroutine(SectionAttack());
     }
 
     void Update()
     {
+        return;
         if (action) { return; }
         action = true;
         switch (state)
@@ -280,29 +282,29 @@ public class Level6 : MonoBehaviour
         foreach (int i in columns[7]) { blocks[i].SetAction("damage", 3.0f); }
         yield return new WaitForSeconds(3.0f);
         int count = 0;
-        for (int i = 1; i < 8; )
+        for (int i = 1; i < 9;)
         {
-            if (i != 7)
+            if (i < 7)
             {
-                foreach (int index in columns[7]) 
-                { 
-                    blocks[index].SetAction("damage", 0.25f); 
+                foreach (int index in columns[7])
+                {
+                    blocks[index].SetAction("damage", 0.25f);
                 }
             }
             if (count == 4)
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    if (j == safeIndex) { blocks[columns[i][j]].SetAction("push", 11.0f - 1.45f * i , "left"); }
+                    if (j == safeIndex) { blocks[columns[i][j]].SetAction("push", 11.7f - 1.45f * i, "left"); }
                     else
                     {
                         if (Random.Range(0, 100) < 40)
                         {
-                            blocks[columns[i][j]].SetAction("push", 11.0f - 1.45f * i, "left");
+                            blocks[columns[i][j]].SetAction("push", 11.7f - 1.45f * i, "left");
                         }
                         else
                         {
-                            blocks[columns[i][j]].SetAction("pushdamage", 11.0f - 1.45f * i, "left");
+                            blocks[columns[i][j]].SetAction("pushdamage", 11.7f - 1.45f * i, "left");
                         }
                     }
                 }
@@ -311,6 +313,51 @@ public class Level6 : MonoBehaviour
             }
             count++;
             yield return new WaitForSeconds(0.25f);
+        }
+        for (int i = 0; i < columns[0].Count; i++)
+        {
+            if (i == safeIndex)
+            {
+                blocks[columns[0][i]].SetAction("attack", 3.0f);
+                continue;
+            }
+            blocks[columns[0][i]].SetAction("damage", 3.0f);
+        }
+    }
+
+    IEnumerator SectionAttack()
+    {
+        int[] attackOrder = new int[3] { 0, 1, 2 };
+        for (int i = 0; i < 50; i++)
+        {
+            int i1 = Random.Range(0, 3);
+            int i2 = Random.Range(0, 3);
+            if (i1 == i2) { continue; }
+            int temp = attackOrder[i1];
+            attackOrder[i1] = attackOrder[i2];
+            attackOrder[i2] = temp;
+        }
+        foreach (int i in attackOrder)
+        {
+            if (i == 0)
+            {
+                foreach (int j in columns[0]) { blocks[j].SetAction("damage", 3.5f); }
+                foreach (int j in columns[1]) { blocks[j].SetAction("damage", 3.5f); }
+                foreach (int j in columns[2]) { blocks[j].SetAction("damage", 3.5f); }
+            }
+            if (i == 1)
+            {
+                foreach (int j in columns[3]) { blocks[j].SetAction("damage", 3.5f); }
+                foreach (int j in columns[4]) { blocks[j].SetAction("damage", 3.5f); }
+                foreach (int j in columns[5]) { blocks[j].SetAction("damage", 3.5f); }
+            }
+            if (i == 2)
+            {
+                foreach (int j in columns[6]) { blocks[j].SetAction("damage", 3.5f); }
+                foreach (int j in columns[7]) { blocks[j].SetAction("damage", 3.5f); }
+                foreach (int j in columns[8]) { blocks[j].SetAction("damage", 3.5f); }
+            }
+            yield return new WaitForSeconds(1.5f);
         }
     }
 }
