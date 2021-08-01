@@ -46,7 +46,7 @@ public class Level6 : MonoBehaviour
         rows.Add(r4);
 
         SetupBlocks();
-        StartCoroutine(SectionAttack());
+        StartCoroutine(LevelStartRoutine());
     }
 
     void Update()
@@ -84,6 +84,20 @@ public class Level6 : MonoBehaviour
                 StartCoroutine(BeltAttack());
                 state++;
                 break;
+        }
+    }
+
+    IEnumerator LevelStartRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < blocks.Count; i++)
+        {
+            blocks[i].AscendBlock();
+            print(i);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
         }
     }
 

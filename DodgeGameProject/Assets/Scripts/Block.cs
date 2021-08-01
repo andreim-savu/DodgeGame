@@ -16,6 +16,8 @@ public class Block : MonoBehaviour
     [SerializeField] Sprite pushDamageSprite;
     [SerializeField] Sprite attackSprite;
 
+    Animator anim;
+
     public List<Block> neighbours = new List<Block>();
 
     enum blockAction {INACTIVE, DAMAGE, PUSH, PUSHDAMAGE, ATTACK};
@@ -37,8 +39,14 @@ public class Block : MonoBehaviour
 
     bool playerOn;
 
-    void Start()
+    void Awake()
     {
+        anim = GetComponent<Animator>();
+    }
+
+    public void AscendBlock()
+    {
+        anim.SetTrigger("Ascend");
     }
 
     public void SetNeighbours(List<Block> blocks)

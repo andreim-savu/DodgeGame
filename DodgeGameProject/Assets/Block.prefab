@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 4738622371416502417}
   - component: {fileID: 4738622371416502422}
   - component: {fileID: 4738622371416502416}
+  - component: {fileID: 1667420223}
   m_Layer: 0
   m_Name: Block
   m_TagString: Block
@@ -399,6 +400,7 @@ MonoBehaviour:
   pushSprite: {fileID: 21300000, guid: 9fa2d394837e26a41be815807042fd0c, type: 3}
   pushDamageSprite: {fileID: 21300000, guid: 1d1396b0158a66a46a7f9d528dea2418, type: 3}
   attackSprite: {fileID: 21300000, guid: b652b074568d46d47ad7abde1947480e, type: 3}
+  neighbours: []
   cubeBody:
   - {fileID: 4738622371826355574}
   - {fileID: 4738622371735377462}
@@ -406,6 +408,25 @@ MonoBehaviour:
   - {fileID: 4738622370886229264}
   - {fileID: 4738622372344148092}
   actionImage: {fileID: 379818734619546355}
+--- !u!95 &1667420223
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4738622371416502418}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21d2492318070ae45ac7ce3f3360b15a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4738622371735377462
 GameObject:
   m_ObjectHideFlags: 0
